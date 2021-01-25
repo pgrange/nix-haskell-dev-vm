@@ -32,7 +32,8 @@ sudo -E apt-get upgrade -y
 
 sudo -E apt-get install -y apt-transport-https  ca-certificates  curl  software-properties-common git \
      emacs libtinfo-dev tmux graphviz wget jq python3 python3-pip bzip2 readline-common google-cloud-sdk \
-     neovim docker-ce inotify-tools silversearcher-ag fd-find ripgrep
+     neovim docker-ce inotify-tools silversearcher-ag fd-find ripgrep \
+     build-essential curl libffi-dev libffi7 libgmp-dev libgmp10 libncurses-dev libncurses5 libtinfo5
 
 # install docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -40,6 +41,9 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # prefer ipv4 connections over ipv6
 echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
+
+# install ghcup
+curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 
 # install stack
 curl -sSL https://get.haskellstack.org/ | sh
