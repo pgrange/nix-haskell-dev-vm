@@ -42,14 +42,16 @@ sudo chmod +x /usr/local/bin/docker-compose
 # prefer ipv4 connections over ipv6
 echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
 
-# install ghcup
-curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+# install & configure nix
+sh <(curl -L https://nixos.org/nix/install) --daemon
 
-# install stack
-curl -sSL https://get.haskellstack.org/ | sh
-
-# install nix
-curl -L https://nixos.org/nix/install | sh
+cat | sudo tee /etc/nix/nix.conf <<EOF
+max-jobs = 6
+cores = 0
+trusted-users = root curry
+substituters = https://cache.nixos.org https://hydra.iohk.io https://iohk.cachix.org
+trusted-public-keys = iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+EOF
 
 # configure unattended upgrades
 distro_id=$(lsb_release -is)
