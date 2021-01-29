@@ -18,13 +18,14 @@ if [ -d ~/hydra-sim ]; then
     popd
 fi
 
-# configure cachix
+# configure nix stuff
 source /etc/profile.d/nix.sh
 
+# direnv is used on a per-directory basis in projects, better
+# install it now
 nix-env -i direnv
 
 if ! [ -z "$CACHIX_AUTHENTICATION" ] ; then
-    # we use absolute path to default
     nix-env -iA cachix -f https://cachix.org/api/v1/install
     cachix authtoken "$CACHIX_AUTHENTICATION"
     cachix use hydra-sim
@@ -36,8 +37,8 @@ if [ -d ~/hydra-sim ]; then
     nix-build
     direnv allow
 
-    # configure nix-shell then exit
+    # configure nix-shell
     # there's probably a better way to do this
-    ( nix-shell ; exit )
+    nix-shell --run true
     popd
 fi
