@@ -1,10 +1,14 @@
 {
+  "variables": {
+    "gcp_account_file": "",
+    "gcp_project_id": ""
+  },
   "builders": [
     {
       "type": "googlecompute",
       "source_image": "ubuntu-2004-focal-v20210112",
-      "account_file": "pankzsoft-terraform-admin.json",
-      "project_id": "pankzsoft-terraform-admin",
+      "account_file": "{{user `gcp_account_file`}}",
+      "project_id": "{{user `gcp_project_id`}}",
       "ssh_username": "curry",
       "image_family": "pankzsoft",
       "image_name": "dev-{{timestamp}}",

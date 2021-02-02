@@ -16,11 +16,11 @@ This is not mandatory and can be changed by editing the `image = dev-xxxx` param
 
 ```
 $ cd packer
-$ packer build build.json
+$ packer build build.json -var 'gcp_account_file=xxx' -var 'gcp_project_id=zzz'
 ... <takes some time>
 ```
 
-This base image will be named `dev-<timestamp>` and available for use once the build finishes. The configuration of the image is done using script [build-env.sh](./packer/build-env.sh).
+The [builder](https://www.packer.io/docs/templates/builders) depends on two user variables that tells packer how to authenticate to GCP and which project to run the builder in. This base image will be named `dev-<timestamp>` and available for use once the build finishes. The configuration of the image is done using script [build-env.sh](./packer/build-env.sh).
 
 ## Deploying the VM
 
@@ -31,6 +31,8 @@ $ terraform init
 ```
 
 Create a `compute.tfvars` containing a single variable for `cachix_authentication` token. It can be left empty, in which no additional cachix configuration will be done when the VM spins up.
+
+Update the `ssh_keys` file with public keys that will be allowed to log into the VM, prefixing each key with `curry` or `root` depending on whether one wants to provide normal user or super-user access to the VM. Note the user `curry` will automatically be given `sudo` rights by the packer builder.
 
 Then create a deployment plan and apply it:
 
@@ -49,4 +51,6 @@ instance_ip = X.Y.Z.T
 
 The deployment takes about 14 minutes as it builds and configures nix-shell for the [hydra-sim](https://github.com/abailly/hydra-sim) project which, even with caching enabled, takes a while.
 
-Then one should be able to log into the VM, start tmux and emacs, and then hack some stuff.
+# Using the VM
+
+Then one should be able to log into the VM as user `curry`, start tmux and emacs, and then hack some stuff.

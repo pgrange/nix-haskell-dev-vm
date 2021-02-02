@@ -30,6 +30,7 @@ sudo -E apt-get update
 # Ugrade image
 sudo -E apt-get upgrade -y
 
+# TODO trim down the list of packages to install as most of them should be provided by nix
 sudo -E apt-get install -y apt-transport-https  ca-certificates  curl  software-properties-common git \
      emacs libtinfo-dev tmux graphviz wget jq python3 python3-pip bzip2 readline-common google-cloud-sdk \
      neovim docker-ce inotify-tools silversearcher-ag fd-find ripgrep \
@@ -43,6 +44,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
 
 # install & configure nix
+# TODO check signature/hash?
 sh <(curl -L https://nixos.org/nix/install) --daemon
 
 cat | sudo tee /etc/nix/nix.conf <<EOF
