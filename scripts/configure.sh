@@ -18,16 +18,6 @@ if [ -d ~/hydra-sim ]; then
     popd
 fi
 
-# clone hydra repositories and update remote to be able
-# to push later on
-git clone https://github.com/input-output-hk/hydra-node ~/hydra-node
-
-if [ -d ~/hydra-sim ]; then
-    pushd ~/hydra-sim
-    git remote set-url origin git@github.com:input-output-hk/hydra-node
-    popd
-fi
-
 # configure nix stuff
 source /etc/profile.d/nix.sh
 
@@ -57,4 +47,3 @@ function configure_source() {
 }
 
 configure_source ~/hydra-sim
-configure_source ~/hydra-node
