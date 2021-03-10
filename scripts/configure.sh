@@ -15,8 +15,7 @@ ssh-keyscan github.com >> ~/.ssh/known_hosts
 # download public keys of interest
 gpg --keyserver keys.openpgp.org --recv 39AF57FB92B465F8AE6FD1BCCB4571C05D7B9E12 B73C82125079C8FC79666FFA59FAA903C906659A
 
-# clone hydra repositories and update remote to be able
-# to push later on
+# clone hydra repositories
 git clone git@github.com:input-output-hk/hydra-node ~/hydra-node
 
 # configure nix stuff
@@ -31,9 +30,19 @@ cat > $HOME/.direnvrc <<EOF
 source $HOME/.nix-profile/share/nix-direnv/direnvrc
 EOF
 
-cat | sudo tee /etc/nix/nix.conf <<EOF
+sudo tee -a /etc/nix/nix.conf > /dev/null <<EOF
 keep-derivations = true
 keep-outputs = true
+EOF
+
+# this is needed for proper gpg-agent forwarding to work
+sudo tee -a /etc/ssh/sshd_config > /dev/null <<EOF
+StreamLocalBindUnlink yes
+EOF
+
+# Ensure gpg socket is cleaned up on logout so that it can be forwarded again
+cat >> ~/.bash_logout <<EOF
+rm -f /run/user/$(id -u)/gnupg/S.gpg-agent
 EOF
 
 if ! [ -z "$CACHIX_AUTHENTICATION" ] ; then
@@ -57,7 +66,7 @@ function configure_source() {
 
     # we still don't handle dependencies in nix so need to update cabal
     # lest we pay the price first time we build
-    cabal update && cabal test local-cluster
+    nix-shell --run 'cabal update && cabal test local-cluster'
     popd
 }
 
