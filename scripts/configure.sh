@@ -17,6 +17,8 @@ gpg --keyserver keys.openpgp.org --recv 39AF57FB92B465F8AE6FD1BCCB4571C05D7B9E12
 
 # clone hydra repositories
 git clone git@github.com:input-output-hk/hydra-node ~/hydra-node
+git clone git@github.com:input-output-hk/ouroboros-network ~/ouroboros-network
+git clone git@github.com:abailly-iohk/hydra-sim ~/hydra-sim
 
 # configure nix stuff
 source /etc/profile.d/nix.sh
@@ -48,8 +50,7 @@ EOF
 if ! [ -z "$CACHIX_AUTHENTICATION" ] ; then
     nix-env -iA cachix -f https://cachix.org/api/v1/install
     cachix authtoken "$CACHIX_AUTHENTICATION"
-    # TODO create dedicated cache?
-    cachix use hydra-sym
+    cachix use hydra-node
 fi
 
 # Configure some source directory
@@ -67,6 +68,10 @@ function configure_source() {
     # we still don't handle dependencies in nix so need to update cabal
     # lest we pay the price first time we build
     nix-shell --run 'cabal update && cabal test local-cluster'
+
+    # update cachix cache
+    # from  https://github.com/cachix/cachix/issues/52#issuecomment-409515133
+    nix-store -qR --include-outputs $(nix-instantiate shell.nix) | cachix push hydra-node
     popd
 }
 
