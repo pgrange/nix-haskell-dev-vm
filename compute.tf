@@ -5,8 +5,8 @@ resource "google_compute_instance" "haskell-dev-vm" {
   name         = "haskell-dev-vm-1"
   # custom type
   # RAM is a multiple of 256MB
-  # 38400 = 256MB * 150
-  machine_type = "custom-6-38400"
+  # 38400 = 256MB * 80
+  machine_type = "custom-6-20480"
   allow_stopping_for_update = true
 
   tags = [ "dev-vm" ]
