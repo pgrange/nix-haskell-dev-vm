@@ -17,6 +17,7 @@ gpg --keyserver keys.openpgp.org --recv 39AF57FB92B465F8AE6FD1BCCB4571C05D7B9E12
 
 # clone hydra repositories
 git clone git@github.com:input-output-hk/hydra-node ~/hydra-node
+git clone git@github.com:input-output-hk/cardano-ledger-specs ~/cardano-ledger-specs
 git clone git@github.com:input-output-hk/ouroboros-network ~/ouroboros-network
 git clone git@github.com:abailly-iohk/hydra-sim ~/hydra-sim
 
@@ -61,13 +62,9 @@ function configure_source() {
     # this is needed otherwise direnv will ignore it and LSP won't kickoff
     direnv allow .envrc
 
-    # configure nix-shell
-    # there's probably a better way to do this
-    nix-shell --run true
-
     # we still don't handle dependencies in nix so need to update cabal
     # lest we pay the price first time we build
-    nix-shell --run 'cabal update && cabal test local-cluster'
+    nix-shell --run 'cabal update && cabal test all'
 
     # update cachix cache
     # from  https://github.com/cachix/cachix/issues/52#issuecomment-409515133

@@ -30,6 +30,16 @@ resource "google_compute_instance" "haskell-dev-vm" {
     }
   }
 
+  service_account {
+    email = google_service_account.hydra_builder.email
+
+    scopes = [
+      "compute-ro",
+      "logging-write",
+      "storage-rw",
+    ]
+  }
+  
   provisioner "file" {
     source      = "scripts/configure.sh"
     destination = "/home/curry/configure.sh"
