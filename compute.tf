@@ -18,7 +18,7 @@ resource "google_compute_instance" "haskell-dev-vm" {
   boot_disk {
     initialize_params {
       size  = 100
-      image = "dev-1611918695"
+      image = "dev-1616173662"
     }
   }
 

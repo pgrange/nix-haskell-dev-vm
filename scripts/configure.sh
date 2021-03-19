@@ -33,16 +33,6 @@ cat > $HOME/.direnvrc <<EOF
 source $HOME/.nix-profile/share/nix-direnv/direnvrc
 EOF
 
-sudo tee -a /etc/nix/nix.conf > /dev/null <<EOF
-keep-derivations = true
-keep-outputs = true
-EOF
-
-# this is needed for proper gpg-agent forwarding to work
-sudo tee -a /etc/ssh/sshd_config > /dev/null <<EOF
-StreamLocalBindUnlink yes
-EOF
-
 # Ensure gpg socket is cleaned up on logout so that it can be forwarded again
 cat >> ~/.bash_logout <<EOF
 rm -f /run/user/$(id -u)/gnupg/S.gpg-agent
