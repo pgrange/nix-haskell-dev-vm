@@ -1,5 +1,16 @@
 variable "cachix_authentication" {}
 
+resource "google_compute_disk" "haskell-dev-vm-disk" {
+  name  = "haskell-dev-vm-disk"
+  type  = "pd-ssd"
+  zone  = "europe-west4-b"
+  size  = 100
+  snapshot = "haskell-dev-vm-snapshot"
+  labels = {
+    environment = "dev"
+  }
+}
+
 resource "google_compute_instance" "haskell-dev-vm" {
   project      = "pankzsoft-terraform-admin"
   name         = "haskell-dev-vm-1"
@@ -16,10 +27,7 @@ resource "google_compute_instance" "haskell-dev-vm" {
   }
 
   boot_disk {
-    initialize_params {
-      size  = 100
-      image = "dev-1616173662"
-    }
+    source = google_compute_disk.haskell-dev-vm-disk.self_link
   }
 
   network_interface {

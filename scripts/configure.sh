@@ -20,6 +20,7 @@ git clone git@github.com:input-output-hk/hydra-node ~/hydra-node
 git clone git@github.com:input-output-hk/cardano-ledger-specs ~/cardano-ledger-specs
 git clone git@github.com:input-output-hk/ouroboros-network ~/ouroboros-network
 git clone git@github.com:abailly-iohk/hydra-sim ~/hydra-sim
+git clone git@github.com:abailly-iohk/plutus ~/plutus
 
 # configure nix stuff
 source /etc/profile.d/nix.sh
@@ -63,3 +64,4 @@ function configure_source() {
 }
 
 configure_source ~/hydra-node
+
