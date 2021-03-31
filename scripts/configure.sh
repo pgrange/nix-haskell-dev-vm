@@ -16,13 +16,13 @@ ssh-keyscan github.com >> ~/.ssh/known_hosts
 gpg --keyserver keys.openpgp.org --recv 39AF57FB92B465F8AE6FD1BCCB4571C05D7B9E12 B73C82125079C8FC79666FFA59FAA903C906659A
 
 # clone or update hydra repositories
-for repo in "hydra-node cardano-ledger-specs ouroboros-network hydra-sim plutus"; do
-    if [[ ! -d "~/$repo" ]]; then
-        git clone "git@github.com:input-output-hk/$repo"
-    else
-        pushd "~/$repo"
+for repo in hydra-poc cardano-ledger-specs ouroboros-network hydra-sim plutus; do
+    if [[ -d "$repo" ]]; then
+        pushd "$repo"
         git pull
         popd
+    else
+        git clone "git@github.com:input-output-hk/$repo"
     fi
 done
 
@@ -67,5 +67,5 @@ function configure_source() {
     popd
 }
 
-configure_source ~/hydra-node
+configure_source ~/hydra-poc
 
