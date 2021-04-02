@@ -14,6 +14,8 @@ ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # download public keys of interest
 gpg --keyserver keys.openpgp.org --recv 39AF57FB92B465F8AE6FD1BCCB4571C05D7B9E12 B73C82125079C8FC79666FFA59FAA903C906659A
+curl https://api.github.com/users/KtorZ/gpg_keys | jq -r '.[] | .raw_key' | gpg --import
+curl https://keybase.io/ktorz/pgp_keys.asc | gpg --import
 
 # clone or update hydra repositories
 for repo in hydra-poc cardano-ledger-specs ouroboros-network hydra-sim plutus; do
@@ -68,4 +70,3 @@ function configure_source() {
 }
 
 configure_source ~/hydra-poc
-
