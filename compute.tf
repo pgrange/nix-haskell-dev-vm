@@ -47,7 +47,7 @@ resource "google_compute_instance" "haskell-dev-vm" {
       "storage-rw",
     ]
   }
-  
+
   provisioner "file" {
     source      = "scripts/configure.sh"
     destination = "/home/curry/configure.sh"
@@ -76,6 +76,10 @@ resource "google_compute_instance" "haskell-dev-vm" {
 
 output "instance_id" {
   value = google_compute_instance.haskell-dev-vm.self_link
+}
+
+output "project" {
+  value = google_compute_instance.haskell-dev-vm.project
 }
 
 output "instance_ip" {
