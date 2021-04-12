@@ -5,9 +5,12 @@
 
 SNAPSHOT_NAME=haskell-dev-vm-snapshot
 DISK_NAME=haskell-dev-vm-disk
+PROJECT=$(terraform output -raw project)
+
+gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
 
 # Ensure disk exists before creating snapshot
-if gcloud compute disks list | grep $DISK_NAME ; then
-    gcloud compute snapshots delete $SNAPSHOT_NAME
-    gcloud compute disks snapshot $DISK_NAME --snapshot-names=$SNAPSHOT_NAME  --description="Snapshot - $(date "+%Y-%m-%d")" --zone europe-west4-b
+if gcloud "--project=${PROJECT}" compute disks list | grep $DISK_NAME ; then
+    gcloud "--project=${PROJECT}" compute snapshots delete $SNAPSHOT_NAME
+    gcloud "--project=${PROJECT}" compute disks snapshot $DISK_NAME --snapshot-names=$SNAPSHOT_NAME  --description="Snapshot - $(date "+%Y-%m-%d")" --zone europe-west4-b
 fi
