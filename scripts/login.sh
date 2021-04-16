@@ -1,10 +1,13 @@
 #!/bin/bash
 # Connect to remote VM using creds/names given by $1
 
+[ -z "${GOOGLE_APPLICATION_CREDENTIALS}" ] && { echo "please set env variable GOOGLE_APLPICATION_CREDENTIALS"; exit 1; }
+
+gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+
 CONNECT_AS=$1
 PROJECT=$(terraform output -raw project)
 
-gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
 
 gcloud "--project=${PROJECT}" compute ssh "$CONNECT_AS" -- -A -o StreamLocalBindUnlink=yes \
        -o ForwardAgent=yes \

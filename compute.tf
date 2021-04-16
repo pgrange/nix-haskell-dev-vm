@@ -4,7 +4,7 @@ resource "google_compute_disk" "haskell-dev-vm-disk" {
   name  = "haskell-dev-vm-disk"
   type  = "pd-ssd"
   zone  = "europe-west4-b"
-  size  = 100
+  size  = 200
   snapshot = "haskell-dev-vm-snapshot"
   labels = {
     environment = "dev"
