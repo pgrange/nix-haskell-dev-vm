@@ -2,6 +2,9 @@
 # configure Ubuntu-based machines with everything needed for development
 # of IOHK Haskell code
 
+# ensure apt does not try to 'Dialog' with a user
+export DEBIAN_FRONTEND=noninteractive
+
 # for emacs27
 sudo add-apt-repository -y ppa:kelleyk/emacs
 
@@ -18,7 +21,7 @@ sudo -E apt-get upgrade -y
 sudo -E apt-get install -y apt-transport-https  ca-certificates  curl  software-properties-common git \
      emacs27-nox gnupg2 libtinfo-dev tmux graphviz wget jq bzip2 readline-common \
      neovim inotify-tools silversearcher-ag fd-find ripgrep \
-     build-essential curl 
+     build-essential curl
 
 # prefer ipv4 connections over ipv6
 echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf

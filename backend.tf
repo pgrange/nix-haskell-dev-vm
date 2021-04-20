@@ -1,6 +1,6 @@
 terraform {
  backend "gcs" {
-   bucket  = "pankzsoft-terraform-admin"
+   bucket  = "hydra-terraform-admin"
    prefix  = "terraform/dev-vm/state"
  }
 }

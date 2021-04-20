@@ -10,8 +10,8 @@
       "account_file": "{{user `gcp_account_file`}}",
       "project_id": "{{user `gcp_project_id`}}",
       "ssh_username": "curry",
-      "image_family": "pankzsoft",
-      "image_name": "dev-{{timestamp}}",
+      "image_family": "iog-hydra",
+      "image_name": "iog-hydra-{{timestamp}}",
       "zone": "europe-west4-a"
     }
   ],

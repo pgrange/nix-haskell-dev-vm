@@ -24,7 +24,7 @@ for repo in hydra-poc cardano-ledger-specs ouroboros-network hydra-sim plutus; d
         git pull
         popd
     else
-        git clone "git@github.com:input-output-hk/$repo"
+        git clone "git@github.com:input-output-hk/$repo" || { echo "Failed to clone $repo, check 'ssh-add -l' shows up valid SSH keys"; exit 1 ; }
     fi
 done
 

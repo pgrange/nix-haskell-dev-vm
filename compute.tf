@@ -1,22 +1,34 @@
 variable "cachix_authentication" {}
+variable "use_snapshot" {}
 
-resource "google_compute_disk" "haskell-dev-vm-disk" {
-  name  = "haskell-dev-vm-disk"
+resource "google_compute_disk" "haskell-dev-vm-image" {
+  count = var.use_snapshot == 1 ? 0 : 1
+  name  = "haskell-dev-vm-disk-image"
   type  = "pd-ssd"
   zone  = "europe-west4-b"
   size  = 200
-  snapshot = "haskell-dev-vm-snapshot"
+  image = "iog-hydra-1618910228"
+  labels = {
+    environment = "dev"
+  }
+}
+
+resource "google_compute_disk" "haskell-dev-vm-snapshot" {
+  count = var.use_snapshot == 1 ? 1 : 0
+  name  = "haskell-dev-vm-disk-snapshot"
+  type  = "pd-ssd"
+  zone  = "europe-west4-b"
+  size  = 200
+  snapshot = var.use_snapshot == 1 ? "iog-hydra-dev-vm-snapshot" : ""
   labels = {
     environment = "dev"
   }
 }
 
 resource "google_compute_instance" "haskell-dev-vm" {
-  project      = "pankzsoft-terraform-admin"
   name         = "haskell-dev-vm-1"
   # custom type
   # RAM is a multiple of 256MB
-  # 38400 = 256MB * 80
   machine_type = "custom-6-20480"
   allow_stopping_for_update = true
 
@@ -27,7 +39,7 @@ resource "google_compute_instance" "haskell-dev-vm" {
   }
 
   boot_disk {
-    source = google_compute_disk.haskell-dev-vm-disk.self_link
+    source = var.use_snapshot == 1 ? google_compute_disk.haskell-dev-vm-snapshot[0].self_link : google_compute_disk.haskell-dev-vm-image[0].self_link
   }
 
   network_interface {
@@ -36,16 +48,6 @@ resource "google_compute_instance" "haskell-dev-vm" {
     access_config {
       // Ephemeral IP
     }
-  }
-
-  service_account {
-    email = google_service_account.hydra_builder.email
-
-    scopes = [
-      "compute-ro",
-      "logging-write",
-      "storage-rw",
-    ]
   }
 
   provisioner "file" {
@@ -84,4 +86,9 @@ output "project" {
 
 output "instance_ip" {
   value = google_compute_instance.haskell-dev-vm.network_interface.0.access_config.0.nat_ip
+}
+
+output "has_snapshot" {
+  value = var.use_snapshot
+  description = "Whether (1) or not (0) to use snapshot when creating VM"
 }
