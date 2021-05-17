@@ -6,7 +6,13 @@ git clone https://github.com/abailly-iohk/dotfiles ~/dotfiles
 [[ -L ~/.emacs ]] || ln -s ~/dotfiles/.emacs ~/.emacs
 [[ -L ~/.tmux.conf ]] || ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 [[ -L ~/.gitconfig ]] || ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+if [[ -f ~/.bashrc ]]; then
+    rm ~/.bashrc
+    ln -s ~/dotfiles/.bashrc ~/.bashrc
+fi
 
+# run Emacs installation script, mostly for preinstalling a bunch of
+# packages
 emacs --batch -q -l dotfiles/install.el
 
 # accept github.com key
