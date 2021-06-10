@@ -17,11 +17,20 @@ sudo -E apt-get update
 # Ugrade image
 sudo -E apt-get upgrade -y
 
+# install Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo apt-add-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+
 # TODO trim down the list of packages to install as most of them should be provided by nix
 sudo -E apt-get install -y apt-transport-https  ca-certificates  curl  software-properties-common git \
      emacs27-nox gnupg2 libtinfo-dev tmux graphviz wget jq bzip2 readline-common \
      neovim inotify-tools silversearcher-ag fd-find ripgrep \
-     build-essential curl language-pack-en
+     build-essential curl language-pack-en docker-ce
+
+# install docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 # prefer ipv4 connections over ipv6
 echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
