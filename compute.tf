@@ -27,9 +27,10 @@ resource "google_compute_disk" "haskell-dev-vm-snapshot" {
 
 resource "google_compute_instance" "haskell-dev-vm" {
   name         = "haskell-dev-vm-1"
-  # custom type
-  # RAM is a multiple of 256MB
-  machine_type = "custom-6-20480"
+
+  # For faster CPUs
+  # see https://cloud.google.com/compute/docs/compute-optimized-machines
+  machine_type = "c2-standard-4"
   allow_stopping_for_update = true
 
   tags = [ "dev-vm" ]
