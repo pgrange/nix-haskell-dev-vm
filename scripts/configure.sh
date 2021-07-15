@@ -1,15 +1,20 @@
 #!/bin/bash
 # Configure environment for user curry
 
-# clone .emacs configuration from github
+# clone dotfiles from github
 git clone https://github.com/abailly-iohk/dotfiles ~/dotfiles
 [[ -L ~/.emacs ]] || ln -s ~/dotfiles/.emacs ~/.emacs
 [[ -L ~/.tmux.conf ]] || ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 [[ -L ~/.gitconfig ]] || ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 if [[ -f ~/.bashrc ]]; then
     rm ~/.bashrc
-    ln -s ~/dotfiles/.bashrc ~/.bashrc
 fi
+ln -s ~/dotfiles/.bashrc ~/.bashrc
+
+if [[ -f ~/.bash_aliases ]]; then
+    rm ~/.bash_aliases
+fi
+ln -s ~/dotfiles/.bash_aliases ~/.bash_aliases
 
 # run Emacs installation script, mostly for preinstalling a bunch of
 # packages
