@@ -5,11 +5,18 @@
 # ensure apt does not try to 'Dialog' with a user
 export DEBIAN_FRONTEND=noninteractive
 
-# for emacs27
-sudo add-apt-repository -y ppa:kelleyk/emacs
+# Update the package list for basic stuff
+sudo -E apt-get update
+sudo apt install -y apt-transport-https apt-utils ca-certificates curl software-properties-common
 
 # install neovim
 sudo add-apt-repository ppa:neovim-ppa/stable
+
+# install Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Update the package list
 sudo -E apt-get update
@@ -17,16 +24,12 @@ sudo -E apt-get update
 # Ugrade image
 sudo -E apt-get upgrade -y
 
-# install Docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo apt-add-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
-
 # TODO trim down the list of packages to install as most of them should be provided by nix
-sudo -E apt-get install -y apt-transport-https  ca-certificates  curl  software-properties-common git \
-     emacs27-nox gnupg2 libtinfo-dev tmux graphviz wget jq bzip2 readline-common \
+sudo -E apt install -y rsync git \
+     emacs-nox gnupg2 libtinfo-dev tmux graphviz wget jq bzip2 readline-common \
      neovim inotify-tools silversearcher-ag fd-find ripgrep \
-     build-essential curl language-pack-en docker-ce
+     libsodium-dev libghc-hsopenssl-dev libgmp-dev sqlite libsystemd-dev \
+     build-essential language-pack-en docker-ce docker-ce-cli containerd.io
 
 # install docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -46,7 +49,7 @@ EOF
 # install & configure nix
 curl -o install-nix-2.3.10 https://releases.nixos.org/nix/nix-2.3.10/install
 curl -o install-nix-2.3.10.asc https://releases.nixos.org/nix/nix-2.3.10/install.asc
-gpg --keyserver keys.gnupg.net --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
+gpg --keyserver keyserver.ubuntu.com --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
 gpg --verify ./install-nix-2.3.10.asc
 sh ./install-nix-2.3.10 --daemon
 

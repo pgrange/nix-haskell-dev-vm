@@ -6,7 +6,7 @@
   "builders": [
     {
       "type": "googlecompute",
-      "source_image": "ubuntu-2004-focal-v20210112",
+      "source_image": "ubuntu-minimal-2110-impish-v20211014",
       "account_file": "{{user `gcp_account_file`}}",
       "project_id": "{{user `gcp_project_id`}}",
       "ssh_username": "curry",
