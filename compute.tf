@@ -7,7 +7,7 @@ resource "google_compute_disk" "haskell-dev-vm-image" {
   type  = "pd-ssd"
   zone  = "europe-west4-b"
   size  = 200
-  image = "iog-hydra-1623340139"
+  image = "iog-hydra-1637229888"
   labels = {
     environment = "dev"
   }
