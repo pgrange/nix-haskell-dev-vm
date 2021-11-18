@@ -1,6 +1,12 @@
 #!/bin/bash
 # Configure environment for user curry
 
+# fail if something goes wrong
+set -e
+
+# more installs
+sudo apt install shellcheck
+
 # clone dotfiles from github
 git clone https://github.com/abailly-iohk/dotfiles ~/dotfiles
 [[ -L ~/.emacs ]] || ln -s ~/dotfiles/.emacs ~/.emacs
@@ -29,7 +35,7 @@ curl https://api.github.com/users/KtorZ/gpg_keys | jq -r '.[] | .raw_key' | gpg 
 curl https://keybase.io/ktorz/pgp_keys.asc | gpg --import
 
 # clone or update hydra repositories
-for repo in hydra-poc cardano-ledger-specs ouroboros-network hydra-sim plutus; do
+for repo in hydra-poc cardano-ledger-specs ouroboros-network hydra-sim plutus plutus-apps cardano-node; do
     if [[ -d "$repo" ]]; then
         pushd "$repo"
         git pull
