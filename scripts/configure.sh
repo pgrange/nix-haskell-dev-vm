@@ -12,6 +12,8 @@ git clone https://github.com/abailly-iohk/dotfiles ~/dotfiles
 [[ -L ~/.emacs ]] || ln -s ~/dotfiles/.emacs ~/.emacs
 [[ -L ~/.tmux.conf ]] || ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 [[ -L ~/.gitconfig ]] || ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+[[ -L ~/.git-completion.sh ]] || ln -s ~/dotfiles/bash-completion.sh ~/.git-completion.sh
+
 if [[ -f ~/.bashrc ]]; then
     rm ~/.bashrc
 fi
@@ -86,4 +88,4 @@ function configure_source() {
     popd
 }
 
-configure_source ~/hydra-poc
+# configure_source ~/hydra-poc
