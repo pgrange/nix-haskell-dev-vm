@@ -5,7 +5,7 @@ resource "google_compute_disk" "haskell-dev-vm-image" {
   count = var.use_snapshot == 1 ? 0 : 1
   name  = "haskell-dev-vm-disk-image"
   type  = "pd-ssd"
-  zone  = "europe-west4-b"
+  zone  = "europe-west1-b"
   size  = 200
   image = "iog-hydra-1637229888"
   labels = {
@@ -17,7 +17,7 @@ resource "google_compute_disk" "haskell-dev-vm-snapshot" {
   count = var.use_snapshot == 1 ? 1 : 0
   name  = "haskell-dev-vm-disk-snapshot"
   type  = "pd-ssd"
-  zone  = "europe-west4-b"
+  zone  = "europe-west1-b"
   size  = 200
   snapshot = var.use_snapshot == 1 ? "iog-hydra-dev-vm-snapshot" : ""
   labels = {

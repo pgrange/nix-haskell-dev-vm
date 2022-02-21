@@ -4,9 +4,6 @@
 # fail if something goes wrong
 set -e
 
-# more installs
-sudo apt install shellcheck
-
 # clone dotfiles from github
 git clone https://github.com/abailly-iohk/dotfiles ~/dotfiles
 [[ -L ~/.emacs ]] || ln -s ~/dotfiles/.emacs ~/.emacs
@@ -80,7 +77,7 @@ function configure_source() {
 
     # we still don't handle dependencies in nix so need to update cabal
     # lest we pay the price first time we build
-    nix-shell --run 'cabal update && cabal test all'
+    nix-shell --run 'cabal update && cabal build all --enable-tests'
 
     # update cachix cache
     # from  https://github.com/cachix/cachix/issues/52#issuecomment-409515133
