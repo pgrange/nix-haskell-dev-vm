@@ -1,5 +1,5 @@
-resource "google_compute_firewall" "dev-vm-fw" {
-  name    = "allow-ssh"
+resource "google_compute_firewall" "dev-machine-fw" {
+  name    = "allow-machine-ssh"
   network = "default"
 
   allow {
@@ -8,5 +8,5 @@ resource "google_compute_firewall" "dev-vm-fw" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["dev-vm"]
+  target_tags   = ["dev-machine"]
 }

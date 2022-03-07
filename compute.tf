@@ -33,7 +33,7 @@ resource "google_compute_instance" "haskell-dev-vm" {
   machine_type = "c2-standard-4"
   allow_stopping_for_update = true
 
-  tags = [ "dev-vm" ]
+  tags = [ "dev-machine" ]
 
   metadata = {
     sshKeys = file("ssh_keys")
