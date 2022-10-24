@@ -41,7 +41,9 @@ $ gcloud iam service-accounts keys create hydra-poc-builder.json --iam-account h
 
 ## Building the base image
 
-This is not mandatory and can be changed by editing the `image = iog-hydra-xxxx` parameter in [compute.tf](./compute.tf) but this code also provides [Packer](https://www.packer.io/) script to build a base image:
+This is not mandatory and can be changed by editing the `image = iog-hydra-xxxx` parameter in [compute.tf](./compute.tf) but this code also provides [Packer](https://www.packer.io/) script to build a base image.
+
+### GCP
 
 ```
 $ cd packer
@@ -50,6 +52,16 @@ $ packer build build.json -var 'gcp_account_file=xxx' -var 'gcp_project_id=zzz'
 ```
 
 The [builder](https://www.packer.io/docs/templates/builders) depends on two user variables that tells packer how to authenticate to GCP and which project to run the builder in. This base image will be named `iog-hydra-<timestamp>` and available for use once the build finishes. The configuration of the image is done using script [build-env.sh](./packer/build-env.sh).
+
+### AWS
+
+```
+$ cd packer
+$ AWS_PROFILE=<profile> packer build build.json
+... <takes some time>
+```
+
+AWS_PROFILE should be set with a [named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) that has the appropriate access to your AWS account. Your user profile should do the trick.
 
 ## Deploying the VM
 
