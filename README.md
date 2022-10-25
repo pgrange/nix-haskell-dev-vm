@@ -43,7 +43,7 @@ $ gcloud iam service-accounts keys create hydra-poc-builder.json --iam-account h
 
 This is not mandatory and can be changed by editing the `image = iog-hydra-xxxx` parameter in [compute.tf](./compute.tf) but this code also provides [Packer](https://www.packer.io/) script to build a base image.
 
-### GCP
+### Building on GCP
 
 ```
 $ cd packer
@@ -53,7 +53,7 @@ $ packer build build.json -var 'gcp_account_file=xxx' -var 'gcp_project_id=zzz'
 
 The [builder](https://www.packer.io/docs/templates/builders) depends on two user variables that tells packer how to authenticate to GCP and which project to run the builder in. This base image will be named `iog-hydra-<timestamp>` and available for use once the build finishes. The configuration of the image is done using script [build-env.sh](./packer/build-env.sh).
 
-### AWS
+### Building on AWS
 
 ```
 $ cd packer
@@ -67,7 +67,7 @@ AWS_PROFILE should be set with a [named profile](https://docs.aws.amazon.com/cli
 
 You could deploy the VM either on GCP or AWS
 
-### GCP
+### Deploying on GCP
 
 Got to the GCP directory:
 
@@ -117,7 +117,7 @@ Using an existing snapshot requires setting the `use_snapshot` in terraform to `
 $ terraform apply -var-file=dev-vm.tfvars -var use_snapshot=1 -auto-approve
 ```
 
-### AWS
+### Deploying on AWS
 
 For this step, if you have not already done so, you'll need to setup an [Amazon EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) on your AWS account before moving forward.
 
@@ -140,17 +140,30 @@ Apply terraform:
 
 ```
 TF_VAR_instance_key_name=<AWS managed ssh key pair> AWS_PROFILE=<profile> terraform apply
+...
+Outputs:
+
+dev-vm-ip = "93.184.216.34"
+dev-vm-ssh-key = "my-key"
+dev-vm-ssh-user = "ubuntu"
+```
+
+You should now be able to log to the machine with the following command (ensure your key my-key is loaded on your ssh-agent):
+```
+ssh ubuntu@93.184.216.34
 ```
 
 # Using the VM
 
-Then one should be able to log into the VM as user `curry`, start tmux and emacs, and then hack some stuff.
+Then one should be able to log into the VM, start tmux and emacs, and then hack some stuff.
 
-To log in to the VM:
+To log in to the VM on GCP:
 
 ```
 $ scripts/login.sh curry@haskell-dev-vm-1
 ```
+
+To log in to the VM on AWS, see above [AWS](#Deploying-on-AWS) section
 
 
 # Troubleshooting
