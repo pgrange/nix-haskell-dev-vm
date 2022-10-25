@@ -27,9 +27,10 @@
       },
       "instance_type": "t2.small",
       "ssh_username": "ubuntu",
-      "ami_name": "iog-hydra {{isotime | clean_resource_name}}",
+      "ami_name": "iog-hydra-dev {{isotime | clean_resource_name}}",
       "tags": {
-        "automation": "packer"
+        "automation": "packer",
+        "user": "ubuntu"
       },
       "profile": "{{user `aws_profile`}}"
     }
