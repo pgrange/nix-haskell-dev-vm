@@ -65,6 +65,16 @@ AWS_PROFILE should be set with a [named profile](https://docs.aws.amazon.com/cli
 
 ## Deploying the VM
 
+You could deploy the VM either on GCP or AWS
+
+### GCP
+
+Got to the GCP directory:
+
+```
+cd GCP
+```
+
 Initialise Terraform:
 
 ```
@@ -90,7 +100,7 @@ instance_id = https://www.googleapis.com/compute/v1/projects/xxx
 instance_ip = X.Y.Z.T
 ```
 
-### Snapshots
+#### Snapshots
 
 Deploying a VM from scratch takes a while, depending on the current set of projects configured (see [configure.sh](scripts/configure.sh)). To speed things up there's provision to replace the VM's image-based disk with a snapshot-based disk, and to create snapshots from a running VM.
 
@@ -105,6 +115,31 @@ Using an existing snapshot requires setting the `use_snapshot` in terraform to `
 
 ```
 $ terraform apply -var-file=dev-vm.tfvars -var use_snapshot=1 -auto-approve
+```
+
+### AWS
+
+For this step, if you have not already done so, you'll need to setup an [Amazon EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) on your AWS account before moving forward.
+
+Of course, you'll need to setup terraform state storage for this to work. You can take a look at AWS/meta for a terraform code that will setup an S3 bucket and a DynamoDb table for you. You will have to change `variables.tf` there to chose a bucket unique to you and reflect this to `AWS/terraform.tf`.
+
+Go to the AWS directory:
+
+```
+cd AWS
+```
+
+Initialize terraform:
+
+```
+AWS_PROFILE=<profile> terraform init
+```
+
+Apply terraform:
+
+
+```
+TF_VAR_instance_key_name=<AWS managed ssh key pair> AWS_PROFILE=<profile> terraform apply
 ```
 
 # Using the VM
