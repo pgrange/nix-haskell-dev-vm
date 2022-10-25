@@ -9,6 +9,9 @@ export DEBIAN_FRONTEND=noninteractive
 sudo -E apt-get update
 sudo apt install -y apt-transport-https apt-utils ca-certificates curl software-properties-common
 
+# install mosh for smoother terminal interactions
+sudo apt install -y mosh
+
 # install neovim
 sudo add-apt-repository ppa:neovim-ppa/stable
 

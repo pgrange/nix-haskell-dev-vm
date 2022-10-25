@@ -153,6 +153,11 @@ You should now be able to log to the machine with the following command (ensure 
 ssh ubuntu@93.184.216.34
 ```
 
+As an alternative, you may also want to connect using mosh:
+```
+mosh ubuntu@93.184.216.34
+```
+
 # Using the VM
 
 Then one should be able to log into the VM, start tmux and emacs, and then hack some stuff.
