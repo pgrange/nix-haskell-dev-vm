@@ -12,6 +12,7 @@ resource "aws_instance" "haskell-dev-vm" {
   }
   tags = {
     Name = "dev-vm-pgrange"
+    OfficeHour = "true"
   }
 
   security_groups = [aws_security_group.haskell-dev-vm.name]
