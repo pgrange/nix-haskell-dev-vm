@@ -23,8 +23,8 @@ data "aws_ami" "haskell-dev-vm" {
 
   filter {
     name   = "name"
-    values = ["iog-hydra-dev*"]
+    values = ["debian-11-amd64*"]
   }
 
-  owners = ["949362844383"] # TODO get owner ID
+  owners = ["136693071363"]
 }

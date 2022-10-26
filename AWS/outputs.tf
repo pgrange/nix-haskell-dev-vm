@@ -15,5 +15,6 @@ output "dev-vm-ssh-key" {
 
 output "dev-vm-ssh-user" {
   description = "ssh user to connect to the dev machine"
-  value = data.aws_ami.haskell-dev-vm.tags["user"]
+  #value = data.aws_ami.haskell-dev-vm.tags["user"]
+  value = "admin"
 }
