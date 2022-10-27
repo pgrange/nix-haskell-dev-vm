@@ -13,6 +13,26 @@
       "image_family": "iog-hydra",
       "image_name": "iog-hydra-{{timestamp}}",
       "zone": "europe-west4-a"
+    },
+    {
+      "type": "amazon-ebs",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-focal-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "instance_type": "t2.small",
+      "ssh_username": "ubuntu",
+      "ami_name": "iog-hydra-dev {{isotime | clean_resource_name}}",
+      "tags": {
+        "automation": "packer",
+        "user": "ubuntu"
+      },
+      "profile": "{{user `aws_profile`}}"
     }
   ],
   "provisioners": [{

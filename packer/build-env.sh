@@ -35,8 +35,8 @@ sudo -E apt install -y rsync git \
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# give user curry access to docker socket (should use TLS?)
-sudo adduser curry docker
+# give user curry (if exists) access to docker socket (should use TLS?)
+id curry && sudo adduser curry docker
 
 # prefer ipv4 connections over ipv6
 echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
