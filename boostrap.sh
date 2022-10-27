@@ -11,8 +11,8 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt-get -y update
 sudo apt-get -y upgrade
 
-# install mosh for smoother terminal interactions
-sudo apt install -y mosh
+# install smoother terminal interactions tools
+sudo apt install -y tmux mosh
 
 # Install doom emacs to code
 sudo apt install -y emacs git
