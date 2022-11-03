@@ -15,7 +15,7 @@ sudo apt-get -y upgrade
 sudo apt install -y tmux mosh
 
 # Install doom emacs to code
-sudo apt install -y emacs git
+sudo apt install -y emacs git ripgrep
 git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
 export PATH=$PATH:~/.config/emacs/bin
