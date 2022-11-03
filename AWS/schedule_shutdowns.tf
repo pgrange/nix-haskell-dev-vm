@@ -15,20 +15,3 @@ module "stop-dev-vm" {
     value = "true"
   }
 }
-
-module "start-dev-vm" {
-  # startup every week day at 6am UTC (8am CEST)
-  source                         = "diodonfrost/lambda-scheduler-stop-start/aws"
-  name                           = "startup"
-  cloudwatch_schedule_expression = "cron(0 6 ? * MON-FRI *)"
-  schedule_action                = "start"
-  autoscaling_schedule           = "false"
-  ec2_schedule                   = "true"
-  rds_schedule                   = "false"
-  cloudwatch_alarm_schedule      = "false"
-  scheduler_tag                  = {
-    key   = "OfficeHour"
-    value = "true"
-  }
-}
-

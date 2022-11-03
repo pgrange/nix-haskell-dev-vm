@@ -1,3 +1,8 @@
+output "dev-vm-id" {
+  description = "ID in AWS of the dev machine"
+  value = aws_instance.haskell-dev-vm.id
+}
+
 output "dev-vm-ip" {
   description = "IP address to connect to the dev machine"
   value = aws_eip.haskell-dev-vm.public_ip
