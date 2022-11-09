@@ -12,6 +12,7 @@ resource "aws_instance" "haskell-dev-vm" {
   }
   tags = {
     Name = "dev-vm-pgrange"
+    OfficeHour = "true"
   }
 
   security_groups = [aws_security_group.haskell-dev-vm.name]
@@ -26,19 +27,4 @@ data "aws_ami" "haskell-dev-vm" {
   }
 
   owners = ["949362844383"] # TODO get owner ID
-}
-
-output "dev-vm-ip" {
-  description = "IP address to connect to the dev machine"
-  value = aws_instance.haskell-dev-vm.public_ip
-}
-
-output "dev-vm-ssh-key" {
-  description = "AWS managed ssh key to connect to the dev machine"
-  value = aws_instance.haskell-dev-vm.key_name
-}
-
-output "dev-vm-ssh-user" {
-  description = "ssh user to connect to the dev machine"
-  value = data.aws_ami.haskell-dev-vm.tags["user"]
 }

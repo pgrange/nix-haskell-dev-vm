@@ -20,3 +20,6 @@ resource "aws_security_group" "haskell-dev-vm" {
   }
 }
 
+resource "aws_eip" "haskell-dev-vm" {
+  instance = aws_instance.haskell-dev-vm.id
+}
