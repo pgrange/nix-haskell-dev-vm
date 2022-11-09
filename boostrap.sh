@@ -58,6 +58,7 @@ sed  -i -e 's:;;ivy:ivy:' ~/.config/doom/init.el
 sed  -i -e 's:;;(format +onsave):(format +onsave):' ~/.config/doom/init.el
 sed  -i -e 's:;;(haskell +lsp):(haskell +lsp):' ~/.config/doom/init.el
 sed  -i -e 's:;;multiple-cursors:multiple-cursors:' ~/.config/doom/init.el
+sed  -i -e 's:;;direnv:direnv:' ~/.config/doom/init.el
 doom sync
 
 # install nix as per https://nixos.org/download.html
@@ -67,4 +68,20 @@ trusted-users = root $(whoami)
 substituters = https://cache.nixos.org https://hydra.iohk.io https://iohk.cachix.org
 trusted-public-keys = iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 experimental-features = nix-command flakes
+EOF
+
+# install direnv
+sudo apt install -y direnv
+cat <<EOF >> $HOME/.bashrc
+
+# load direnv in the shell
+eval "\$(direnv hook bash)"
+EOF
+
+#install nix-direnv
+mkdir -p $HOME/.config/direnv
+cat <<EOF > $HOME/.config/direnv/direnvrc
+if ! has nix_direnv_version || ! nix_direnv_version 2.1.1; then
+  source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/2.1.1/direnvrc" "sha256-b6qJ4r34rbE23yWjMqbmu3ia2z4b2wIlZUksBke/ol0="
+fi
 EOF
