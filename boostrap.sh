@@ -51,7 +51,7 @@ cat <<EOF >> ~/.config/doom/config.el
   :filter
   (lambda (output errput)
     (list output
-          (replace-regexp-in-string "Loaded config from:[^\n]\n" "" errput))))
+          (replace-regexp-in-string "Loaded config from:[^\n]*\n*" "" errput))))
 EOF
 sed  -i -e 's:;;helm:helm:' ~/.config/doom/init.el
 sed  -i -e 's:;;ivy:ivy:' ~/.config/doom/init.el
