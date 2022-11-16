@@ -55,6 +55,7 @@ cat <<EOF >> ~/.config/doom/config.el
 EOF
 sed  -i -e 's:;;helm:helm:' ~/.config/doom/init.el
 sed  -i -e 's:;;ivy:ivy:' ~/.config/doom/init.el
+sed  -i -e 's:;;lsp:lsp:' ~/.config/doom/init.el
 sed  -i -e 's:;;(format +onsave):(format +onsave):' ~/.config/doom/init.el
 sed  -i -e 's:;;(haskell +lsp):(haskell +lsp):' ~/.config/doom/init.el
 sed  -i -e 's:;;multiple-cursors:multiple-cursors:' ~/.config/doom/init.el
