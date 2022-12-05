@@ -14,8 +14,24 @@ sudo apt-get -y upgrade
 # install smoother terminal interactions tools
 sudo apt install -y tmux mosh
 
+# install and setup git
+sudo apt install -y git
+read -p "Enter the value for git user.name: "  git_user_name
+read -p "Enter the value for git user.email: " git_user_email
+cat <<EOF >~/.gitconfig
+[init]
+	defaultBranch = main
+[user]
+	email = ${git_user_email}
+	name = ${git_user_name}
+[pull]
+	rebase = true
+[alias]
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+EOF
+
 # Install doom emacs to code
-sudo apt install -y emacs git ripgrep
+sudo apt install -y emacs ripgrep
 git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
 echo 'PATH=$PATH:~/.config/emacs/bin' >> ~/.bashrc
@@ -88,7 +104,6 @@ if ! has nix_direnv_version || ! nix_direnv_version 2.1.1; then
   source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/2.1.1/direnvrc" "sha256-b6qJ4r34rbE23yWjMqbmu3ia2z4b2wIlZUksBke/ol0="
 fi
 EOF
-
 
 # Remember, the first time you want compile hskall project you might have to do:
 # $> cabal update
