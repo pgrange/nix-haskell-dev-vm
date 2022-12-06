@@ -1,6 +1,6 @@
 variable instance_type {
   type = string
-  default = "c5.2xlarge"
+  default = "c6i.2xlarge"
 }
 variable "instance_volume_size" {
   type = number
